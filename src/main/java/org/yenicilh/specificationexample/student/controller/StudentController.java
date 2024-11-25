@@ -45,13 +45,25 @@ public class StudentController {
 
     @PostMapping("/filter")
     public List<StudentDtoResponse> filter(@RequestBody RequestDto request) {
-        Specification<Student> specification = studentSpecification.getSpecification(request.request());
+        Specification<Student> specification = studentSpecification.getSpecificationEqual(request.request());
         return studentMapper.toResponseList(studentService.findAll(specification));
     }
 
-    @PostMapping("/filterList")
-    public List<StudentDtoResponse> filterList(@RequestBody RequestListDto request) {
-        Specification<Student> specification = studentSpecification.getSpecification(request.requestDtoList());
+    @PostMapping("/filterList1")
+    public List<StudentDtoResponse> filterList1(@RequestBody RequestListDto request) {
+        Specification<Student> specification = studentSpecification.getSpecificationAnd(request.requestDtoList());
+        return studentMapper.toResponseList(studentService.findAll(specification));
+    }
+
+    @PostMapping("/filterList2")
+    public List<StudentDtoResponse> filterList2(@RequestBody RequestListDto request) {
+        Specification<Student> specification = studentSpecification.getSpecificationAndOr(request.requestDtoList());
+        return studentMapper.toResponseList(studentService.findAll(specification));
+    }
+
+    @PostMapping("/filterOperators")
+    public List<StudentDtoResponse> filterOperators(@RequestBody RequestListDto request) {
+        Specification<Student> specification = studentSpecification.getSpecificationOperators(request.requestDtoList());
         return studentMapper.toResponseList(studentService.findAll(specification));
     }
 
